@@ -1,18 +1,16 @@
 import Link from 'next/link'
-import { Server } from 'lucide-react'
 
 const divisions = [
   { num: '01', tag: 'B2C', name: 'Business to Consumer', desc: 'Network switches, fiber cables & connectivity products for homes, SMEs and retail customers across India.', href: '/home' },
-  { num: '02', tag: 'B2G', name: 'Business to Government', desc: 'RDSO approved cables, telecom infrastructure & enterprise networking for government projects, railways & PSUs.', href: '/home' },
+  { num: '02', tag: 'B2G', name: 'Business to Government', desc: 'MTCTE & TTP Approved Network Switches, telecom infrastructure & enterprise networking for government projects, railways & PSUs.', href: '/home' },
   { num: '03', tag: 'OEM', name: 'Original Equipment Mfr.', desc: 'Custom manufacturing, white-labelling & bulk supply of networking hardware for brands & system integrators.', href: '/home' },
   { num: '04', tag: 'SI', name: 'System Integrator', desc: 'End-to-end network design and deployment solutions for IT system integrators, EPC contractors & project partners.', href: '/home' },
 ]
 
 const stats = [
-  { val: '10+', lbl: 'Years Experience' },
+  { val: '11+', lbl: 'Years Experience' },
   { val: '500+', lbl: 'Products' },
   { val: '1000+', lbl: 'Happy Clients' },
-  { val: '₹25Cr+', lbl: 'Annual Turnover' },
 ]
 
 export default function LandingPage() {
@@ -26,13 +24,12 @@ export default function LandingPage() {
         {/* Header */}
         <header className="flex items-center justify-between px-16 py-6 border-b border-cyan/10">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 flex items-center justify-center animate-pulse-glow"
-              style={{background:'linear-gradient(135deg,#0055bb,#0099dd)',clipPath:'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)'}}>
-              <Server size={20} color="#e8f8ff" strokeWidth={2.2}/>
+            {/* DE Box Logo */}
+            <div style={{width:'42px',height:'42px',background:'rgba(0,229,255,0.12)',border:'1.5px solid #00e5ff',borderRadius:'6px',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <span style={{fontFamily:'Arial Black,sans-serif',fontSize:'18px',fontWeight:'900',color:'#00e5ff',letterSpacing:'1px'}}>DE</span>
             </div>
-            <div>
-              <div className="font-orbitron text-lg font-bold tracking-widest">DRON<span className="text-cyan">EDGE</span></div>
-              <div className="text-[9px] tracking-[0.22em] uppercase text-text-muted">India Private Limited</div>
+            <div style={{fontFamily:'Arial Black,sans-serif',fontSize:'22px',fontWeight:'900',letterSpacing:'3px',color:'#e8f8ff'}}>
+              DRON<span style={{color:'#00e5ff'}}>EDGE</span>
             </div>
           </div>
           <div className="font-orbitron text-[10px] tracking-[0.16em] uppercase text-cyan border border-cyan/30 px-4 py-1.5 bg-cyan/05 hidden md:block">
@@ -60,7 +57,6 @@ export default function LandingPage() {
             India's trusted manufacturer &amp; exporter of Optical Fiber Cables, Network Switches &amp; Telecom Infrastructure — engineered for scale.
           </p>
 
-          {/* Division label */}
           <div className="flex items-center gap-4 text-[11px] tracking-[0.32em] uppercase text-text-muted mb-7">
             <span className="w-20 h-px bg-cyan/20"/>
             Select Your Division
@@ -72,17 +68,10 @@ export default function LandingPage() {
             {divisions.map(d => (
               <Link key={d.tag} href={d.href}
                 className="group relative bg-blue-mid/70 border border-cyan/12 rounded-md p-8 text-left hover:border-cyan/45 hover:-translate-y-2 transition-all duration-350 overflow-hidden">
-                {/* Scan effect */}
                 <div className="absolute inset-0 bg-gradient-to-b from-cyan/0 via-cyan/04 to-cyan/0 opacity-0 group-hover:opacity-100 transition-opacity"/>
-                {/* Bottom line */}
                 <div className="absolute bottom-0 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-cyan to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-350"/>
-                {/* Corner */}
                 <div className="absolute top-0 right-0 w-11 h-11 border-t-2 border-r-2 border-cyan/22 rounded-tr-md group-hover:border-cyan/70 group-hover:w-14 group-hover:h-14 transition-all duration-300"/>
-
                 <div className="font-orbitron text-[10px] tracking-[0.28em] text-cyan/35 mb-4">// {d.num}</div>
-                <div className="w-12 h-12 border border-cyan/22 rounded bg-cyan/05 flex items-center justify-center mb-4 group-hover:bg-cyan/12 group-hover:border-cyan transition-all">
-                  <Server size={20} className="text-cyan"/>
-                </div>
                 <div className="font-orbitron text-2xl font-bold mb-1">{d.tag}</div>
                 <div className="text-[10px] tracking-[0.12em] uppercase text-cyan opacity-80 mb-3">{d.name}</div>
                 <div className="text-[13px] text-text-muted font-light leading-relaxed mb-6">{d.desc}</div>
@@ -94,10 +83,10 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 w-full max-w-5xl mt-11 border border-cyan/10 rounded-md overflow-hidden bg-blue-mid/40">
+          {/* Stats — 3 items, no turnover */}
+          <div className="grid grid-cols-3 w-full max-w-5xl mt-11 border border-cyan/10 rounded-md overflow-hidden bg-blue-mid/40">
             {stats.map((s, i) => (
-              <div key={s.lbl} className={`py-5 px-6 ${i < 3 ? 'border-r border-cyan/10' : ''} hover:bg-cyan/04 transition-colors`}>
+              <div key={s.lbl} className={`py-5 px-6 ${i < 2 ? 'border-r border-cyan/10' : ''} hover:bg-cyan/04 transition-colors`}>
                 <div className="font-orbitron text-xl font-bold text-cyan" style={{textShadow:'0 0 18px rgba(0,229,255,0.4)'}}>{s.val}</div>
                 <div className="text-[11px] tracking-widest uppercase text-text-muted mt-1">{s.lbl}</div>
               </div>
