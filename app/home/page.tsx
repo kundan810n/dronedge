@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
+import TestimonialBanner from '@/components/ui/TestimonialBanner'
 import { supabase } from '@/lib/supabase'
 
 async function getContent() {
@@ -38,7 +39,7 @@ const whyUs = [
   { icon: '🛡️', title: 'RDSO Approved', desc: 'Our optical fiber cables carry RDSO certification — mandatory for Indian Railways and government infrastructure projects.' },
   { icon: '🏭', title: 'In-House Manufacturing', desc: 'Full manufacturing facility in Noida. Direct factory pricing with complete quality control.' },
   { icon: '⚡', title: 'Fast Delivery', desc: 'Bulk stock ready at our Noida warehouse. Pan India delivery within 2–5 working days.' },
-  { icon: '📅', title: '10+ Years Experience', desc: 'Since 2015, serving telecom, government and enterprise sectors with consistent quality.' },
+  { icon: '📅', title: '11+ Years Experience', desc: 'Since 2015, serving telecom, government and enterprise sectors with consistent quality.' },
   { icon: '🏷️', title: 'OEM & White Label', desc: 'Custom branding, packaging and bulk manufacturing for distributors and international clients.' },
   { icon: '📞', title: 'Dedicated Support', desc: 'Pre-sales technical consultation, after-sales warranty support and on-site assistance.' },
 ]
@@ -210,10 +211,9 @@ export default async function HomePage() {
       <section className="px-16 py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 border border-cyan/10 rounded-lg overflow-hidden" style={{background:'rgba(7,26,53,0.5)'}}>
           {[
-            { val: content.stat_years || '10+', lbl: 'Years in Business' },
+            { val: content.stat_years || '11+', lbl: 'Years in Business' },
             { val: content.stat_products || '500+', lbl: 'Products' },
             { val: content.stat_clients || '1000+', lbl: 'Happy Clients' },
-            { val: content.stat_turnover || '₹25Cr+', lbl: 'Annual Turnover' },
           ].map((s, i) => (
             <div key={s.lbl} className={`p-8 ${i < 3 ? 'border-r border-cyan/10' : ''} hover:bg-cyan/04 transition-colors`}>
               <div className="font-orbitron text-2xl font-bold text-cyan mb-2" style={{textShadow:'0 0 20px rgba(0,229,255,0.4)'}}>{s.val}</div>
@@ -240,6 +240,7 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <TestimonialBanner/>
       <Footer/>
       <WhatsAppButton/>
     </div>
