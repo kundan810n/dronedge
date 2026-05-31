@@ -33,7 +33,15 @@ export default function AdminDashboard() {
             <Link href="/" target="_blank" className="text-xs text-text-muted hover:text-cyan transition-colors tracking-wider">
               View Website ↗
             </Link>
-            <button className="text-xs text-red-400 hover:text-red-300 transition-colors tracking-wider">
+            <button onClick={async () => {
+              const { createClient } = await import('@supabase/supabase-js')
+              const supabase = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+              )
+              await supabase.auth.signOut()
+              window.location.href = '/admin/login'
+            }} className="text-xs text-red-400 hover:text-red-300 transition-colors tracking-wider">
               Sign Out
             </button>
           </div>

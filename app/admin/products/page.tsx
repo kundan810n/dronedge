@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Plus, Edit2, Trash2, Eye, EyeOff, Search, ArrowLeft, Star } from 'lucide-react'
+import { Plus, Edit2, Trash2, Eye, EyeOff, Search, ArrowLeft, Star, Package } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Product } from '@/types'
 
