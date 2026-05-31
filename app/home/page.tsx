@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -23,11 +22,6 @@ async function getClients() {
   return data || []
 }
 
-async function getTestimonials() {
-  const { data } = await supabase.from('testimonials').select('*').eq('is_visible', true).order('order')
-  return data || []
-}
-
 const divisions = [
   { num: '01', tag: 'B2C', name: 'Business to Consumer', desc: 'Network switches, fiber cables & connectivity products for homes, SMEs and retail customers.' },
   { num: '02', tag: 'B2G', name: 'Business to Government', desc: 'RDSO approved cables, telecom infrastructure for government projects, railways & PSUs.' },
@@ -39,7 +33,7 @@ const whyUs = [
   { icon: '🛡️', title: 'RDSO Approved', desc: 'Our optical fiber cables carry RDSO certification — mandatory for Indian Railways and government infrastructure projects.' },
   { icon: '🏭', title: 'In-House Manufacturing', desc: 'Full manufacturing facility in Noida. Direct factory pricing with complete quality control.' },
   { icon: '⚡', title: 'Fast Delivery', desc: 'Bulk stock ready at our Noida warehouse. Pan India delivery within 2–5 working days.' },
-  { icon: '📅', title: '11+ Years Experience', desc: 'Since 2015, serving telecom, government and enterprise sectors with consistent quality.' },
+  { icon: '📅', title: '11+ Years Experience', desc: 'Since 2014, serving telecom, government and enterprise sectors with consistent quality.' },
   { icon: '🏷️', title: 'OEM & White Label', desc: 'Custom branding, packaging and bulk manufacturing for distributors and international clients.' },
   { icon: '📞', title: 'Dedicated Support', desc: 'Pre-sales technical consultation, after-sales warranty support and on-site assistance.' },
 ]
@@ -48,7 +42,6 @@ export default async function HomePage() {
   const content = await getContent()
   const products = await getProducts()
   const clients = await getClients()
-  const testimonials = await getTestimonials()
 
   return (
     <div className="min-h-screen bg-blue-deep">
@@ -66,7 +59,7 @@ export default async function HomePage() {
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.3em] uppercase text-cyan mb-6">
             <span className="w-9 h-px" style={{background:'linear-gradient(90deg,transparent,#00e5ff)'}}/>
-            Manufacturer & Exporter · Est. 2015 · Noida
+            Manufacturer & Exporter · Est. 2014 · Noida
             <span className="w-9 h-px" style={{background:'linear-gradient(90deg,#00e5ff,transparent)'}}/>
           </div>
           <h1 className="font-orbitron font-black uppercase leading-none mb-3 text-white" style={{fontSize:'clamp(2.6rem,6vw,5.5rem)'}}>
@@ -179,43 +172,15 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* TESTIMONIALS */}
-      {testimonials.length > 0 && (
-        <section className="px-16 py-20" style={{background:'rgba(4,15,32,0.5)'}}>
-          <div className="text-xs tracking-[0.3em] uppercase text-cyan mb-3 flex items-center gap-3">
-            <span className="w-7 h-px bg-cyan"/>Testimonials
-          </div>
-          <h2 className="font-orbitron text-3xl font-bold mb-12">What Clients <span className="text-cyan">Say About Us</span></h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {testimonials.map(t => (
-              <div key={t.id} className="bg-blue-mid/60 border border-cyan/08 rounded-lg p-7 hover:border-cyan/25 transition-colors">
-                <div className="text-3xl text-cyan opacity-25 font-orbitron mb-3">"</div>
-                <p className="text-sm text-text-muted font-light leading-relaxed italic mb-5">{t.text}</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-cyan/08">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center font-orbitron text-xs font-bold text-cyan"
-                    style={{background:'linear-gradient(135deg,rgba(0,80,180,0.5),rgba(0,229,255,0.2))',border:'1px solid rgba(0,229,255,0.2)'}}>
-                    {t.initials}
-                  </div>
-                  <div>
-                    <div className="font-orbitron text-xs font-semibold">{t.name}</div>
-                    <div className="text-[11px] text-text-muted">{t.role}, {t.company}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* STATS */}
+      {/* STATS — 11+, no turnover */}
       <section className="px-16 py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 border border-cyan/10 rounded-lg overflow-hidden" style={{background:'rgba(7,26,53,0.5)'}}>
+        <div className="grid grid-cols-3 border border-cyan/10 rounded-lg overflow-hidden" style={{background:'rgba(7,26,53,0.5)'}}>
           {[
             { val: content.stat_years || '11+', lbl: 'Years in Business' },
             { val: content.stat_products || '500+', lbl: 'Products' },
             { val: content.stat_clients || '1000+', lbl: 'Happy Clients' },
           ].map((s, i) => (
-            <div key={s.lbl} className={`p-8 ${i < 3 ? 'border-r border-cyan/10' : ''} hover:bg-cyan/04 transition-colors`}>
+            <div key={s.lbl} className={`p-8 ${i < 2 ? 'border-r border-cyan/10' : ''} hover:bg-cyan/04 transition-colors`}>
               <div className="font-orbitron text-2xl font-bold text-cyan mb-2" style={{textShadow:'0 0 20px rgba(0,229,255,0.4)'}}>{s.val}</div>
               <div className="text-xs tracking-widest uppercase text-text-muted">{s.lbl}</div>
             </div>
