@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Edit2, Trash2, Eye, EyeOff, Search, ArrowLeft, Star, Package } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import type { Product } from '@/types'
 
 export default function AdminProducts() {
@@ -23,7 +23,7 @@ export default function AdminProducts() {
   useEffect(() => { fetchProducts() }, [])
 
   async function fetchProducts() {
-    const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })
+    const { data } = await supabaseAdmin.from('products').select('*').order('created_at', { ascending: false })
     setProducts(data || [])
     setLoading(false)
   }
@@ -39,9 +39,9 @@ export default function AdminProducts() {
     }
 
     if (editProduct) {
-      await supabase.from('products').update(payload).eq('id', editProduct.id)
+      await supabaseAdmin.from('products').update(payload).eq('id', editProduct.id)
     } else {
-      await supabase.from('products').insert([payload])
+      await supabaseAdmin.from('products').insert([payload])
     }
     setShowForm(false)
     setEditProduct(null)
@@ -50,13 +50,13 @@ export default function AdminProducts() {
   }
 
   async function toggleVisible(p: Product) {
-    await supabase.from('products').update({ is_visible: !p.is_visible }).eq('id', p.id)
+    await supabaseAdmin.from('products').update({ is_visible: !p.is_visible }).eq('id', p.id)
     fetchProducts()
   }
 
   async function deleteProduct(id: string) {
     if (!confirm('Delete this product?')) return
-    await supabase.from('products').delete().eq('id', id)
+    await supabaseAdmin.from('products').delete().eq('id', id)
     fetchProducts()
   }
 
