@@ -1,9 +1,14 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Plus, Edit2, Trash2, Eye, EyeOff, Search, ArrowLeft, Star, Package } from 'lucide-react'
-import { supabaseAdmin } from '@/lib/supabase'
+import { Plus, Edit2, Trash2, Eye, EyeOff, Search, ArrowLeft, Package } from 'lucide-react'
+import { createClient } from '@supabase/supabase-js'
 import type { Product } from '@/types'
+
+const getClient = () => createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([])
@@ -11,37 +16,35 @@ export default function AdminProducts() {
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [editProduct, setEditProduct] = useState<Product | null>(null)
-
-  // Form state
   const [form, setForm] = useState({
     name: '', slug: '', category: '', sub_category: '',
     model_number: '', description: '', tags: '', badge: '',
-    is_featured: false, is_visible: true,
-    specs: '' // JSON string
+    is_featured: false, is_visible: true, specs: ''
   })
 
   useEffect(() => { fetchProducts() }, [])
 
   async function fetchProducts() {
-    const { data } = await supabaseAdmin.from('products').select('*').order('created_at', { ascending: false })
+    const sb = getClient()
+    const { data, error } = await sb.from('products').select('*').order('created_at', { ascending: false })
+    console.log('Products fetch:', data, error)
     setProducts(data || [])
     setLoading(false)
   }
 
   async function saveProduct() {
+    const sb = getClient()
     let specsObj: Record<string, string> = {}
     try { specsObj = JSON.parse(form.specs || '{}') } catch {}
-
     const payload = {
       ...form,
-      tags: form.tags.split(',').map(t => t.trim()).filter(Boolean),
+      tags: form.tags.split(',').map((t: string) => t.trim()).filter(Boolean),
       specs: specsObj,
     }
-
     if (editProduct) {
-      await supabaseAdmin.from('products').update(payload).eq('id', editProduct.id)
+      await sb.from('products').update(payload).eq('id', editProduct.id)
     } else {
-      await supabaseAdmin.from('products').insert([payload])
+      await sb.from('products').insert([payload])
     }
     setShowForm(false)
     setEditProduct(null)
@@ -50,13 +53,15 @@ export default function AdminProducts() {
   }
 
   async function toggleVisible(p: Product) {
-    await supabaseAdmin.from('products').update({ is_visible: !p.is_visible }).eq('id', p.id)
+    const sb = getClient()
+    await sb.from('products').update({ is_visible: !p.is_visible }).eq('id', p.id)
     fetchProducts()
   }
 
   async function deleteProduct(id: string) {
     if (!confirm('Delete this product?')) return
-    await supabaseAdmin.from('products').delete().eq('id', id)
+    const sb = getClient()
+    await sb.from('products').delete().eq('id', id)
     fetchProducts()
   }
 
@@ -87,7 +92,6 @@ export default function AdminProducts() {
     <div className="min-h-screen bg-blue-deep">
       <div className="bg-grid"/>
       <div className="relative z-10">
-        {/* Top Bar */}
         <div className="flex items-center justify-between px-8 py-4 border-b border-cyan/10 bg-blue-dark/80">
           <div className="flex items-center gap-4">
             <Link href="/admin/dashboard" className="text-text-muted hover:text-cyan transition-colors">
@@ -105,15 +109,13 @@ export default function AdminProducts() {
         </div>
 
         <div className="p-8">
-          {/* Search */}
           <div className="relative mb-6 max-w-md">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"/>
             <input value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="Search products..." 
+              placeholder="Search products..."
               className="w-full bg-blue-mid/50 border border-cyan/10 rounded px-4 py-2.5 pl-9 text-sm text-white placeholder-text-muted/50 focus:outline-none focus:border-cyan/40 transition-colors"/>
           </div>
 
-          {/* Products Table */}
           {loading ? (
             <div className="text-center py-20 text-text-muted">Loading...</div>
           ) : filtered.length === 0 ? (
@@ -150,15 +152,11 @@ export default function AdminProducts() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <button onClick={() => editClick(p)} className="text-text-muted hover:text-cyan transition-colors" title="Edit">
-                            <Edit2 size={14}/>
-                          </button>
-                          <button onClick={() => toggleVisible(p)} className="text-text-muted hover:text-cyan transition-colors" title="Toggle visibility">
+                          <button onClick={() => editClick(p)} className="text-text-muted hover:text-cyan transition-colors"><Edit2 size={14}/></button>
+                          <button onClick={() => toggleVisible(p)} className="text-text-muted hover:text-cyan transition-colors">
                             {p.is_visible ? <Eye size={14}/> : <EyeOff size={14}/>}
                           </button>
-                          <button onClick={() => deleteProduct(p.id)} className="text-text-muted hover:text-red-400 transition-colors" title="Delete">
-                            <Trash2 size={14}/>
-                          </button>
+                          <button onClick={() => deleteProduct(p.id)} className="text-text-muted hover:text-red-400 transition-colors"><Trash2 size={14}/></button>
                         </div>
                       </td>
                     </tr>
@@ -170,14 +168,11 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      {/* Add/Edit Modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 bg-blue-deep/95 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-8 px-4">
           <div className="bg-blue-mid border border-cyan/15 rounded-lg w-full max-w-2xl p-8 relative">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan to-transparent opacity-60"/>
-            <h2 className="font-orbitron text-lg font-bold mb-6">
-              {editProduct ? 'Edit Product' : 'Add New Product'}
-            </h2>
+            <h2 className="font-orbitron text-lg font-bold mb-6">{editProduct ? 'Edit Product' : 'Add New Product'}</h2>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: 'Product Name *', key: 'name', placeholder: 'DE-SW-48P PoE Switch' },
@@ -186,78 +181,4 @@ export default function AdminProducts() {
                 { label: 'Badge', key: 'badge', placeholder: 'New / Popular / RDSO' },
               ].map(f => (
                 <div key={f.key}>
-                  <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">{f.label}</label>
-                  <input value={(form as any)[f.key]} onChange={e => setForm({...form, [f.key]: e.target.value})}
-                    placeholder={f.placeholder}
-                    className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors"/>
-                </div>
-              ))}
-
-              <div>
-                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Category *</label>
-                <select value={form.category} onChange={e => setForm({...form, category: e.target.value})}
-                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white focus:outline-none focus:border-cyan/40 transition-colors">
-                  <option value="">Select Category</option>
-                  {categories.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Sub Category</label>
-                <input value={form.sub_category} onChange={e => setForm({...form, sub_category: e.target.value})}
-                  placeholder="Network Switches"
-                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors"/>
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Tags (comma separated)</label>
-                <input value={form.tags} onChange={e => setForm({...form, tags: e.target.value})}
-                  placeholder="8 Port, Gigabit, Unmanaged"
-                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors"/>
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Description</label>
-                <textarea value={form.description} onChange={e => setForm({...form, description: e.target.value})}
-                  placeholder="Product description..." rows={3}
-                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors resize-none"/>
-              </div>
-
-              <div className="col-span-2">
-                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">
-                  Specifications (JSON format)
-                </label>
-                <textarea value={form.specs} onChange={e => setForm({...form, specs: e.target.value})}
-                  placeholder={'{\n  "Ports": "48 x Gigabit RJ45",\n  "PoE Standard": "802.3at"\n}'}
-                  rows={5}
-                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors font-mono text-xs resize-none"/>
-              </div>
-
-              <div className="col-span-2 flex gap-6">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={form.is_visible} onChange={e => setForm({...form, is_visible: e.target.checked})} className="accent-cyan"/>
-                  <span className="text-sm text-text-muted">Visible on website</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={form.is_featured} onChange={e => setForm({...form, is_featured: e.target.checked})} className="accent-cyan"/>
-                  <span className="text-sm text-text-muted">Featured product</span>
-                </label>
-              </div>
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <button onClick={saveProduct}
-                className="flex-1 font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep py-3 rounded font-bold hover:bg-cyan-dim transition-colors">
-                {editProduct ? 'Update Product' : 'Add Product'}
-              </button>
-              <button onClick={() => { setShowForm(false); setEditProduct(null) }}
-                className="px-6 border border-cyan/25 text-cyan text-xs tracking-widest uppercase font-orbitron rounded hover:bg-cyan/05 transition-colors">
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
+                  <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitro
