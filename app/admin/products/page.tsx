@@ -3,12 +3,24 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Edit2, Trash2, Eye, EyeOff, Search, ArrowLeft, Package } from 'lucide-react'
 import { createClient } from '@supabase/supabase-js'
-import type { Product } from '@/types'
 
-const getClient = () => createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+type Product = {
+  id: string
+  name: string
+  slug: string
+  category: string
+  sub_category: string
+  model_number: string
+  description: string
+  specs: Record<string, string>
+  images: string[]
+  datasheet_url?: string
+  tags: string[]
+  badge?: string
+  is_featured: boolean
+  is_visible: boolean
+  created_at: string
+}
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([])
@@ -22,22 +34,39 @@ export default function AdminProducts() {
     is_featured: false, is_visible: true, specs: ''
   })
 
-  useEffect(() => { fetchProducts() }, [])
+  const categories = ['Fiber Optic Solutions', 'Network Solutions', 'Other Solutions']
+
+  function getClient() {
+    return createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  }
 
   async function fetchProducts() {
+    setLoading(true)
     const sb = getClient()
-    const { data, error } = await sb.from('products').select('*').order('created_at', { ascending: false })
-    console.log('Products fetch:', data, error)
+    const { data } = await sb.from('products').select('*').order('created_at', { ascending: false })
     setProducts(data || [])
     setLoading(false)
   }
+
+  useEffect(() => { fetchProducts() }, [])
 
   async function saveProduct() {
     const sb = getClient()
     let specsObj: Record<string, string> = {}
     try { specsObj = JSON.parse(form.specs || '{}') } catch {}
     const payload = {
-      ...form,
+      name: form.name,
+      slug: form.slug,
+      category: form.category,
+      sub_category: form.sub_category,
+      model_number: form.model_number,
+      description: form.description,
+      badge: form.badge,
+      is_featured: form.is_featured,
+      is_visible: form.is_visible,
       tags: form.tags.split(',').map((t: string) => t.trim()).filter(Boolean),
       specs: specsObj,
     }
@@ -68,25 +97,29 @@ export default function AdminProducts() {
   function editClick(p: Product) {
     setEditProduct(p)
     setForm({
-      name: p.name, slug: p.slug, category: p.category,
-      sub_category: p.sub_category || '', model_number: p.model_number || '',
-      description: p.description || '', tags: (p.tags || []).join(', '),
-      badge: p.badge || '', is_featured: p.is_featured, is_visible: p.is_visible,
+      name: p.name,
+      slug: p.slug,
+      category: p.category,
+      sub_category: p.sub_category || '',
+      model_number: p.model_number || '',
+      description: p.description || '',
+      tags: (p.tags || []).join(', '),
+      badge: p.badge || '',
+      is_featured: p.is_featured,
+      is_visible: p.is_visible,
       specs: JSON.stringify(p.specs || {}, null, 2)
     })
     setShowForm(true)
   }
 
   function resetForm() {
-    setForm({ name:'',slug:'',category:'',sub_category:'',model_number:'',description:'',tags:'',badge:'',is_featured:false,is_visible:true,specs:'' })
+    setForm({ name:'', slug:'', category:'', sub_category:'', model_number:'', description:'', tags:'', badge:'', is_featured:false, is_visible:true, specs:'' })
   }
 
   const filtered = products.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
     p.category.toLowerCase().includes(search.toLowerCase())
   )
-}
-  const categories = ['Fiber Optic Solutions', 'Network Solutions', 'Other Solutions']
 
   return (
     <div className="min-h-screen bg-blue-deep">
@@ -181,4 +214,68 @@ export default function AdminProducts() {
                 { label: 'Badge', key: 'badge', placeholder: 'New / Popular / RDSO' },
               ].map(f => (
                 <div key={f.key}>
-                  <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitro
+                  <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">{f.label}</label>
+                  <input value={(form as any)[f.key]} onChange={e => setForm({...form, [f.key]: e.target.value})}
+                    placeholder={f.placeholder}
+                    className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors"/>
+                </div>
+              ))}
+              <div>
+                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Category *</label>
+                <select value={form.category} onChange={e => setForm({...form, category: e.target.value})}
+                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white focus:outline-none focus:border-cyan/40 transition-colors">
+                  <option value="">Select Category</option>
+                  {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Sub Category</label>
+                <input value={form.sub_category} onChange={e => setForm({...form, sub_category: e.target.value})}
+                  placeholder="Network Switches"
+                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors"/>
+              </div>
+              <div className="col-span-2">
+                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Tags (comma separated)</label>
+                <input value={form.tags} onChange={e => setForm({...form, tags: e.target.value})}
+                  placeholder="8 Port, Gigabit, Unmanaged"
+                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors"/>
+              </div>
+              <div className="col-span-2">
+                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Description</label>
+                <textarea value={form.description} onChange={e => setForm({...form, description: e.target.value})}
+                  placeholder="Product description..." rows={3}
+                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors resize-none"/>
+              </div>
+              <div className="col-span-2">
+                <label className="block text-[10px] tracking-[0.18em] uppercase text-text-muted font-orbitron mb-1.5">Specifications (JSON)</label>
+                <textarea value={form.specs} onChange={e => setForm({...form, specs: e.target.value})}
+                  placeholder={'{\n  "Ports": "48 x Gigabit RJ45"\n}'} rows={4}
+                  className="w-full bg-blue-deep/80 border border-cyan/12 rounded px-3 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/40 transition-colors font-mono text-xs resize-none"/>
+              </div>
+              <div className="col-span-2 flex gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={form.is_visible} onChange={e => setForm({...form, is_visible: e.target.checked})} className="accent-cyan"/>
+                  <span className="text-sm text-text-muted">Visible on website</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={form.is_featured} onChange={e => setForm({...form, is_featured: e.target.checked})} className="accent-cyan"/>
+                  <span className="text-sm text-text-muted">Featured product</span>
+                </label>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button onClick={saveProduct}
+                className="flex-1 font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep py-3 rounded font-bold hover:bg-cyan-dim transition-colors">
+                {editProduct ? 'Update Product' : 'Add Product'}
+              </button>
+              <button onClick={() => { setShowForm(false); setEditProduct(null) }}
+                className="px-6 border border-cyan/25 text-cyan text-xs tracking-widest uppercase font-orbitron rounded hover:bg-cyan/05 transition-colors">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
