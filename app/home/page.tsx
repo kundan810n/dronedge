@@ -24,13 +24,12 @@ async function getClients() {
 
 const divisions = [
   { num: '01', tag: 'B2C', name: 'Business to Consumer', desc: 'Network switches, fiber cables & connectivity products for homes, SMEs and retail customers.' },
-  { num: '02', tag: 'B2G', name: 'Business to Government', desc: 'RDSO approved cables, telecom infrastructure for government projects, railways & PSUs.' },
-  { num: '03', tag: 'OEM', name: 'Original Equipment Mfr.', desc: 'Custom manufacturing, white-labelling & bulk supply for brands & system integrators.' },
+ { num: '02', tag: 'B2G', name: 'Business to Government', desc: 'MTCTE & TTP Approved Network Switches, telecom infrastructure & enterprise networking for government projects, railways & PSUs.' },  { num: '03', tag: 'OEM', name: 'Original Equipment Mfr.', desc: 'Custom manufacturing, white-labelling & bulk supply for brands & system integrators.' },
   { num: '04', tag: 'SI', name: 'System Integrator', desc: 'End-to-end network design and deployment for EPC contractors & project partners.' },
 ]
 
 const whyUs = [
-  { icon: '🛡️', title: 'RDSO Approved', desc: 'Our optical fiber cables carry RDSO certification — mandatory for Indian Railways and government infrastructure projects.' },
+  { icon: '🛡️', title: ''MTCTE & TTP Approved Network Switches', desc: 'MTCTE & TTP Approved Network Switches, telecom infrastructure & enterprise networking for government projects, railways & PSUs.' },
   { icon: '🏭', title: 'In-House Manufacturing', desc: 'Full manufacturing facility in Noida. Direct factory pricing with complete quality control.' },
   { icon: '⚡', title: 'Fast Delivery', desc: 'Bulk stock ready at our Noida warehouse. Pan India delivery within 2–5 working days.' },
   { icon: '📅', title: '11+ Years Experience', desc: 'Since 2014, serving telecom, government and enterprise sectors with consistent quality.' },
