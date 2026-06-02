@@ -85,7 +85,7 @@ export default function AdminProducts() {
     p.name.toLowerCase().includes(search.toLowerCase()) ||
     p.category.toLowerCase().includes(search.toLowerCase())
   )
-
+}
   const categories = ['Fiber Optic Solutions', 'Network Solutions', 'Other Solutions']
 
   return (
