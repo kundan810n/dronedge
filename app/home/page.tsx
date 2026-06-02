@@ -29,7 +29,7 @@ const divisions = [
 ]
 
 const whyUs = [
-  { icon: '🛡️', title: ''MTCTE & TTP Approved Network Switches', desc: 'MTCTE & TTP Approved Network Switches, telecom infrastructure & enterprise networking for government projects, railways & PSUs.' },
+  { icon: '🛡️', title: 'MTCTE & TTP Approved Network Switches', desc: 'MTCTE & TTP Approved Network Switches, telecom infrastructure & enterprise networking for government projects, railways & PSUs.' },
   { icon: '🏭', title: 'In-House Manufacturing', desc: 'Full manufacturing facility in Noida. Direct factory pricing with complete quality control.' },
   { icon: '⚡', title: 'Fast Delivery', desc: 'Bulk stock ready at our Noida warehouse. Pan India delivery within 2–5 working days.' },
   { icon: '📅', title: '11+ Years Experience', desc: 'Since 2014, serving telecom, government and enterprise sectors with consistent quality.' },
