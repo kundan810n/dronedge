@@ -66,7 +66,7 @@ export default function ContactPage() {
             <div className="space-y-4 mb-8">
               {[
                 { icon: '📍', label: 'Office Address', val: 'A-93, Sector 65, Noida', sub: 'Gautam Buddha Nagar, Uttar Pradesh — 201301' },
-                { icon: '📞', label: 'Phone / WhatsApp', val: '+91 79426 31533', sub: 'Mon–Sat, 9:00 AM – 6:30 PM IST' },
+                { icon: '📞', label: 'Phone / WhatsApp', val: '+91 8101648585', sub: 'Mon–Sat, 9:00 AM – 6:30 PM IST' },
                 { icon: '📧', label: 'Email', val: 'info@dronedge.in', sub: 'Response within 24 business hours' },
                 { icon: '🕐', label: 'Business Hours', val: 'Monday – Saturday', sub: '9:00 AM – 6:30 PM IST · Sunday Closed' },
               ].map(item => (
@@ -83,10 +83,10 @@ export default function ContactPage() {
 
             {/* Quick buttons */}
             <div className="grid grid-cols-2 gap-3">
-              <a href="tel:+917942631533" className="flex items-center justify-center gap-2 border border-cyan/20 rounded-lg py-3 text-xs text-text-muted hover:border-cyan/40 hover:text-cyan transition-all font-orbitron tracking-wider">
+              <a href="tel:+918101648585" className="flex items-center justify-center gap-2 border border-cyan/20 rounded-lg py-3 text-xs text-text-muted hover:border-cyan/40 hover:text-cyan transition-all font-orbitron tracking-wider">
                 📞 Call Now
               </a>
-              <a href="https://wa.me/917942631533" target="_blank" className="flex items-center justify-center gap-2 border border-cyan/20 rounded-lg py-3 text-xs text-text-muted hover:border-cyan/40 hover:text-cyan transition-all font-orbitron tracking-wider">
+              <a href="https://wa.me/918101648585" target="_blank" className="flex items-center justify-center gap-2 border border-cyan/20 rounded-lg py-3 text-xs text-text-muted hover:border-cyan/40 hover:text-cyan transition-all font-orbitron tracking-wider">
                 💬 WhatsApp
               </a>
             </div>
@@ -100,7 +100,7 @@ export default function ContactPage() {
               <div className="text-center py-10">
                 <div className="text-5xl mb-4">✅</div>
                 <div className="font-orbitron text-lg font-bold text-cyan mb-3">Enquiry Sent!</div>
-                <p className="text-sm text-text-muted leading-relaxed">Our team will respond within <strong className="text-white">24 business hours</strong>.<br/><br/>For urgent requirements:<br/><strong className="text-cyan">+91 79426 31533</strong></p>
+                <p className="text-sm text-text-muted leading-relaxed">Our team will respond within <strong className="text-white">24 business hours</strong>.<br/><br/>For urgent requirements:<br/><strong className="text-cyan">+91 8101648585</strong></p>
               </div>
             ) : (
               <>
