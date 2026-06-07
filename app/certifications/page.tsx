@@ -10,14 +10,18 @@ async function getCertifications() {
 }
 
 const compliance = [
-  { product: 'Optical Fiber Cable (OFC)', standard: 'RDSO Spec. No. TI/SPC/OFC/CABLE/0060', status: 'Approved' },
-  { product: 'Optical Fiber Cable (OFC)', standard: 'ITU-T G.652D — Single Mode Fiber', status: 'Compliant' },
-  { product: 'Network Switches', standard: 'IEEE 802.3 — Ethernet Standard', status: 'Compliant' },
-  { product: 'PoE Switches', standard: 'IEEE 802.3af / 802.3at — PoE/PoE+', status: 'Compliant' },
-  { product: 'ONT / OLT Devices', standard: 'ITU-T G.984 — GPON Standard', status: 'Compliant' },
-  { product: 'OFC Joint Closures', standard: 'IP68 Weatherproof Rating', status: 'Certified' },
-  { product: 'All Products', standard: 'GST Compliant — GSTIN: 09AAFCD3524N1ZE', status: 'Registered' },
-  { product: 'Company', standard: 'MCA — Companies Act 2013', status: 'Registered' },
+  { product: 'Network Switches', standard: 'TEC37942410-MTCTE', status: 'Approved' },
+  { product: 'Network Switches', standard: 'RDSO/SPN/TC/83/2020', status: 'Compliant' },
+  { product: 'Network Switches', standard: 'RDSO/SPN/TC/65/2021', status: 'Compliant' },
+  { product: 'SFP', standard: 'IEEE 802.3 & MSA', status: 'Compliant' },
+  { product: 'OFC Cable', standard: 'TEC/GR/TX/OFC-20/01/MAR-2011', status: 'Compliant' },
+  { product: 'Joint Closure', standard: 'TEC/GR/TX/OJC-002/03/APR-2010', status: 'Compliant' },
+  { product: 'Joint Closure', standard: 'RDSO/SPN/TC/68/2025', status: 'Compliant' },
+  { product: 'FDMS/LIU', standard: 'TEC/GR/FDM-01/02', status: 'Compliant' },
+  { product: 'FDMS/LIU', standard: 'RDSO/SPN/TC/71/2008', status: 'Compliant' },
+  { product: 'FDMS/LIU', standard: 'RDSO/SPN/TC/37', status: 'Compliant' },
+  { product: 'OFC Patch Cord', standard: 'TEC/GR/TX/OFJ-01/05/NOV-09', status: 'Compliant' },
+  { product: 'OFC Patch Cord', standard: 'RDSO/SPN/TC/69/2007', status: 'Compliant' },
 ]
 
 const registrations = [
@@ -25,8 +29,14 @@ const registrations = [
   { label: 'CIN', number: 'U74140BR2015PTC024256', desc: 'Corporate Identity Number — MCA registered Pvt. Ltd.' },
   { label: 'IEC Code', number: 'AAFCD3524N', desc: 'Import Export Code issued by DGFT.' },
   { label: 'PAN', number: 'AAFCD3524N', desc: 'Permanent Account Number for tax compliance.' },
-  { label: 'RDSO', number: 'Approved Vendor', desc: 'RDSO approved OFC manufacturer for Indian Railways.' },
+  { label: 'MTCTE', number: 'TEC Approved', desc: 'MTCTE approved manufacturer — Telecommunication Engineering Centre.' },
   { label: 'Address', number: 'A-93, Sector 65, Noida', desc: 'Gautam Buddha Nagar, UP — 201301.' },
+]
+
+const inspectionSupport = [
+  { icon: '🏅', title: 'RDSO Support', desc: 'Full Inspection Assistance' },
+  { icon: '📋', title: 'RITES Support', desc: 'Full Inspection Assistance' },
+  { icon: '✅', title: 'TPI Support', desc: 'Full Inspection Assistance' },
 ]
 
 export default async function CertificationsPage() {
@@ -60,7 +70,7 @@ export default async function CertificationsPage() {
           <span className="w-7 h-px bg-cyan"/>Our Certifications
         </div>
         <h2 className="font-orbitron text-3xl font-bold mb-3">Verified Quality You <span className="text-cyan">Can Trust</span></h2>
-        <p className="text-text-muted font-light mb-12 max-w-lg">Every certification reflects our commitment to meeting the highest standards — from Indian Railways to international quality benchmarks.</p>
+        <p className="text-text-muted font-light mb-12 max-w-lg">Every certification reflects our commitment to meeting the highest standards — from Government of India to international quality benchmarks.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {certs.map(c => (
             <div key={c.id} className="relative flex gap-6 bg-blue-mid/70 border border-cyan/12 rounded-lg p-8 hover:border-cyan/30 hover:-translate-y-1 transition-all overflow-hidden">
@@ -111,7 +121,7 @@ export default async function CertificationsPage() {
           <span className="w-7 h-px bg-cyan"/>Compliance Matrix
         </div>
         <h2 className="font-orbitron text-3xl font-bold mb-10">Product <span className="text-cyan">Compliance Status</span></h2>
-        <div className="bg-blue-mid/40 border border-cyan/08 rounded-lg overflow-hidden">
+        <div className="bg-blue-mid/40 border border-cyan/08 rounded-lg overflow-hidden mb-6">
           <table className="w-full">
             <thead>
               <tr className="bg-cyan/05 border-b border-cyan/10">
@@ -124,10 +134,14 @@ export default async function CertificationsPage() {
               {compliance.map((c, i) => (
                 <tr key={i} className="border-b border-cyan/05 hover:bg-cyan/02 transition-colors">
                   <td className="px-5 py-3.5 text-sm text-white font-medium">{c.product}</td>
-                  <td className="px-5 py-3.5 text-sm text-text-muted font-light">{c.standard}</td>
+                  <td className="px-5 py-3.5 text-sm text-text-muted font-light font-orbitron text-xs">{c.standard}</td>
                   <td className="px-5 py-3.5">
                     <span className="text-[10px] px-2.5 py-1 rounded font-orbitron flex items-center gap-1.5 w-fit"
-                      style={{background:'rgba(0,255,136,0.08)',border:'1px solid rgba(0,255,136,0.2)',color:'#4ade80'}}>
+                      style={{
+                        background: c.status === 'Approved' ? 'rgba(0,255,136,0.12)' : 'rgba(0,229,255,0.08)',
+                        border: c.status === 'Approved' ? '1px solid rgba(0,255,136,0.3)' : '1px solid rgba(0,229,255,0.2)',
+                        color: c.status === 'Approved' ? '#4ade80' : '#00e5ff'
+                      }}>
                       ✓ {c.status}
                     </span>
                   </td>
@@ -136,12 +150,24 @@ export default async function CertificationsPage() {
             </tbody>
           </table>
         </div>
+
+        {/* INSPECTION SUPPORT BANNER */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          {inspectionSupport.map(item => (
+            <div key={item.title} className="relative bg-blue-mid/70 border border-cyan/15 rounded-xl p-7 text-center hover:border-cyan/40 hover:-translate-y-1 transition-all overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5" style={{background:'linear-gradient(90deg,transparent,rgba(0,229,255,0.5),transparent)'}}/>
+              <div className="text-4xl mb-4">{item.icon}</div>
+              <div className="font-orbitron text-sm font-bold text-white mb-2">{item.title}</div>
+              <div className="text-xs tracking-widest uppercase text-cyan opacity-80">{item.desc}</div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* CTA */}
       <section className="px-16 py-20 text-center" style={{background:'linear-gradient(135deg,rgba(0,80,180,0.2),rgba(0,229,255,0.07))',borderTop:'1px solid rgba(0,229,255,0.15)'}}>
         <h2 className="font-orbitron text-3xl font-bold mb-3">Need <span className="text-cyan">Certification Documents?</span></h2>
-        <p className="text-text-muted font-light mb-8">Need copies of our RDSO approval for your tender? We'll send them within 24 hours.</p>
+        <p className="text-text-muted font-light mb-8">Need copies of our certifications for your tender? We will send them within 24 hours.</p>
         <div className="flex items-center justify-center gap-4 flex-wrap">
           <Link href="/contact" className="font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep px-7 py-3.5 rounded-sm font-bold hover:bg-cyan-dim transition-colors border-2 border-cyan">
             Request Documents
