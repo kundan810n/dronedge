@@ -153,9 +153,9 @@ export default async function AboutPage() {
             <span className="w-7 h-px bg-cyan"/>Leadership
           </div>
           <h2 className="font-orbitron text-3xl font-bold mb-10">The Team Behind <span className="text-cyan">Dron Edge</span></h2>
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-2xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {team.map(m => (
-              <div key={m.id} className="bg-blue-mid/60 border border-cyan/08 rounded-lg overflow-hidden hover:border-cyan/25 hover:-translate-y-1 transition-all text-center">
+              <div key={m.id} className="bg-blue-mid/60 border border-cyan/12 rounded-xl overflow-hidden hover:border-cyan/45 hover:-translate-y-2 transition-all text-center group shadow-lg hover:shadow-cyan/10">
                 <div className="h-44 overflow-hidden bg-blue-deep/80">
                   {m.image ? (
                     <img src={m.image} alt={m.name} className="w-full h-full object-cover object-top"
