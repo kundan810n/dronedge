@@ -5,7 +5,7 @@ import WhatsAppButton from '@/components/ui/WhatsAppButton'
 
 const partnerTiers = [
   {
-    tier: '01', icon: '🥉', name: 'Authorized Reseller',
+    tier: '01', icon: '🥉', name: 'GEM Authorized Reseller',
     desc: 'For small distributors and retailers looking to start their journey with Dron Edge.',
     perks: ['Wholesale pricing', 'Product training', 'Marketing support', 'Technical assistance', 'Sales collateral'],
     cta: 'Apply Now'
