@@ -32,7 +32,7 @@ const whyUs = [
   { icon: '🛡️', title: 'MTCTE & TTP Approved Network Switches', desc: 'MTCTE & TTP Approved Network Switches, telecom infrastructure & enterprise networking for government projects, railways & PSUs.' },
   { icon: '🏭', title: 'In-House Manufacturing', desc: 'Full manufacturing facility in Noida. Direct factory pricing with complete quality control.' },
   { icon: '⚡', title: 'Fast Delivery', desc: 'Bulk stock ready at our Noida warehouse. Pan India delivery within 2–5 working days.' },
-  { icon: '📅', title: '11+ Years Experience', desc: 'Since 2014, serving telecom, government and enterprise sectors with consistent quality.' },
+  { icon: '📅', title: '11+ Years Experience', desc: 'Since 2015, serving telecom, government and enterprise sectors with consistent quality.' },
   { icon: '🏷️', title: 'OEM & White Label', desc: 'Custom branding, packaging and bulk manufacturing for distributors and international clients.' },
   { icon: '📞', title: 'Dedicated Support', desc: 'Pre-sales technical consultation, after-sales warranty support and on-site assistance.' },
 ]
@@ -58,7 +58,7 @@ export default async function HomePage() {
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <div className="flex items-center justify-center gap-3 text-[11px] tracking-[0.3em] uppercase text-cyan mb-6">
             <span className="w-9 h-px" style={{background:'linear-gradient(90deg,transparent,#00e5ff)'}}/>
-            Manufacturer & Exporter · Est. 2014 · Noida
+            Manufacturer & Exporter · Est. 2015 · Noida
             <span className="w-9 h-px" style={{background:'linear-gradient(90deg,#00e5ff,transparent)'}}/>
           </div>
           <h1 className="font-orbitron font-black uppercase leading-none mb-3 text-white" style={{fontSize:'clamp(2.6rem,6vw,5.5rem)'}}>
@@ -198,7 +198,7 @@ export default async function HomePage() {
           <Link href="/contact" className="font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep px-7 py-3.5 rounded-sm font-bold hover:bg-cyan-dim transition-colors border-2 border-cyan">
             Send Enquiry
           </Link>
-          <a href="tel:+917942631533" className="font-orbitron text-xs tracking-widest uppercase text-cyan px-7 py-3.5 rounded-sm font-semibold transition-all border-2 hover:bg-cyan/07" style={{borderColor:'rgba(0,229,255,0.35)'}}>
+          <a href="tel:+918101648585" className="font-orbitron text-xs tracking-widest uppercase text-cyan px-7 py-3.5 rounded-sm font-semibold transition-all border-2 hover:bg-cyan/07" style={{borderColor:'rgba(0,229,255,0.35)'}}>
             📞 Call Us Now
           </a>
         </div>
