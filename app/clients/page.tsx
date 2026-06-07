@@ -17,8 +17,7 @@ const divisions = [
   { tag: 'B2G', name: 'Government Division', desc: 'Central and state government bodies, railways, defence, and public sector undertakings.', clients: ['Indian Railways', 'BSNL', 'Smart Cities', 'Defence', 'State PSUs'] },
   { tag: 'OEM', name: 'Manufacturing Division', desc: 'Brands sourcing custom-manufactured or white-labelled products from our Noida facility.', clients: ['Network Brands', 'Telecom OEMs', 'Export Partners', 'Private Labels', 'Bulk Buyers'] },
   { tag: 'SI', name: 'System Integrator Division', desc: 'IT companies, EPC contractors, and consultants needing complete network supply.', clients: ['IT Integrators', 'EPC Companies', 'Network Consultants', 'Data Centers', 'Infra Companies'] },
-  { tag: 'Oil & Gas', name: 'Oil & Gas Division', desc: 'Major oil and gas PSUs and private companies requiring robust network infrastructure for critical operations.', clients: ['Indian Oil', 'GAIL', 'ONGC', 'Oil & Gas PSUs', 'Refineries'] },
-]
+  ]
 
 export default async function ClientsPage() {
   const { clients, testimonials } = await getData()
