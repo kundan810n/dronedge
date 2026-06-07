@@ -48,11 +48,11 @@ export default function Footer() {
 
       {/* Contact strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 p-5 rounded-lg border border-cyan/08" style={{background:'rgba(7,26,53,0.4)'}}>
-        <a href="tel:+917942631533" className="flex items-center gap-3 text-text-muted hover:text-cyan transition-colors">
+        <a href="tel:+918101648585" className="flex items-center gap-3 text-text-muted hover:text-cyan transition-colors">
           <span className="text-lg">📞</span>
           <div>
             <div className="text-[9px] tracking-widest uppercase text-cyan/60 font-orbitron">Call Us</div>
-            <div className="text-xs font-medium">+91 79426 31533</div>
+            <div className="text-xs font-medium">+91 8101648585</div>
           </div>
         </a>
         <a href="mailto:info@dronedge.in" className="flex items-center gap-3 text-text-muted hover:text-cyan transition-colors">
