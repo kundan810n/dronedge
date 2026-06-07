@@ -1,7 +1,7 @@
 'use client'
 export default function WhatsAppButton() {
   return (
-    <a href="https://wa.me/918759854111" target="_blank" rel="noopener noreferrer"
+    <a href="https://wa.me/918101648585" target="_blank" rel="noopener noreferrer"
       className="fixed bottom-7 right-7 z-50 w-14 h-14 rounded-full flex items-center justify-center
         shadow-lg transition-transform hover:scale-110"
       style={{background:'#25d366', animation:'waPulse 3s ease-in-out infinite'}}
