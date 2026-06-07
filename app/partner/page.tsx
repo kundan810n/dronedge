@@ -73,13 +73,13 @@ export default function PartnerPage() {
             </div>
             <h2 className="font-orbitron text-3xl font-bold mb-6">Join India's Fastest Growing <span className="text-cyan">Network Brand</span></h2>
             <p className="text-sm text-text-muted font-light leading-relaxed mb-4">
-              Dron Edge is India's trusted manufacturer and exporter of optical fiber cables, network switches and telecom equipment. With 10+ years of experience and 1000+ satisfied clients, we offer our partners an unmatched opportunity to grow their business.
+              Dron Edge is India's trusted manufacturer and exporter of optical fiber cables, network switches and telecom equipment. With 11+ years of experience and 1000+ satisfied clients, we offer our partners an unmatched opportunity to grow their business.
             </p>
             <p className="text-sm text-text-muted font-light leading-relaxed mb-8">
               Our partner program is designed to provide maximum value — from industry-leading margins to dedicated technical support — ensuring your success is our success.
             </p>
             <div className="grid grid-cols-3 gap-4">
-              {[{v:'200+',l:'Active Partners'},{v:'28+',l:'States'},{v:'10+',l:'Years'}].map((s,i) => (
+              {[{v:'200+',l:'Active Partners'},{v:'28+',l:'States'},{v:`${new Date().getFullYear() - 2015}+`,l:'Years'}].map((s,i) => (
                 <div key={s.l} className="bg-blue-mid/60 border border-cyan/12 rounded-lg p-4 text-center">
                   <div className="font-orbitron text-xl font-bold text-cyan mb-1" style={{textShadow:'0 0 15px rgba(0,229,255,0.4)'}}>{s.v}</div>
                   <div className="text-[10px] tracking-widest uppercase text-text-muted">{s.l}</div>
