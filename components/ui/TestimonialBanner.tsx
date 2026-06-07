@@ -5,7 +5,7 @@ const defaultTestimonials = [
   { name: 'Amit Singh', role: 'Director, Regional ISP — UP', text: 'Excellent pricing, genuine products and their technical support team is very responsive. Highly recommended for network switches and ONT devices.', initials: 'AS' },
   { name: 'Priya Gupta', role: 'Projects Head, IT Integrator — Delhi NCR', text: 'As a system integrator, we need reliable partners. Dron Edge consistently delivers quality fiber and switching products with proper documentation.', initials: 'PG' },
   { name: 'Vijay Kumar', role: 'Project Manager, Smart City Project', text: 'We have been using Dron Edge switches for our smart city project. The build quality and after-sales support is top notch. Highly recommended!', initials: 'VK' },
-  { name: 'S.K. Mishra', role: 'DGM Telecom, Northern Railways', text: 'Their OFC cables have been deployed across multiple railway stations. Zero complaints in 2 years of operation. Truly RDSO grade quality.', initials: 'SK' },
+  { name: 'S.K. Mishra', role: 'DGM Telecom, Infrastructure Projects', text: 'Their OFC cables have been deployed across multiple railway stations. Zero complaints in 2 years of operation. Truly RDSO grade quality.', initials: 'SK' },
 ]
 
 export default function TestimonialBanner() {
