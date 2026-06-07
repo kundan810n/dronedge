@@ -13,9 +13,15 @@ export default function Footer() {
             India's trusted manufacturer & exporter of Optical Fiber Cables, Network Switches and Telecom Equipment. Serving government, enterprise and retail sectors since 2015.
           </p>
           <div className="flex gap-3 mt-5">
-            {['L','T','F','Y'].map((s,i) => (
-              <a key={i} href="#" className="w-8 h-8 border border-cyan/15 rounded flex items-center justify-center text-text-muted hover:text-cyan hover:border-cyan/40 transition-all text-[10px] font-orbitron">
-                {s}
+            {[
+              { icon: 'in', href: 'https://www.linkedin.com/company/dronedge/' },
+              { icon: 'fb', href: 'https://www.facebook.com/dronedgeindia/' },
+              { icon: 'wa', href: 'https://wa.me/918101648585' },
+              { icon: 'yt', href: '#' },
+            ].map((s,i) => (
+              <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
+                className="w-8 h-8 border border-cyan/15 rounded flex items-center justify-center text-text-muted hover:text-cyan hover:border-cyan/40 transition-all text-[10px] font-orbitron">
+                {s.icon}
               </a>
             ))}
           </div>
@@ -27,22 +33,29 @@ export default function Footer() {
           <Link href="/home" className="block text-sm text-text-muted hover:text-white mb-2 transition-colors">Home</Link>
           <Link href="/about" className="block text-sm text-text-muted hover:text-white mb-2 transition-colors">About Us</Link>
           <Link href="/certifications" className="block text-sm text-text-muted hover:text-white mb-2 transition-colors">Certifications</Link>
+          <Link href="/partner" className="block text-sm text-text-muted hover:text-white mb-2 transition-colors">Partners</Link>
           <Link href="/clients" className="block text-sm text-text-muted hover:text-white mb-2 transition-colors">Clients</Link>
           <Link href="/contact" className="block text-sm text-text-muted hover:text-white mb-2 transition-colors">Contact Us</Link>
         </div>
 
-        {/* Products — Proper categories */}
+        {/* Products */}
         <div>
           <h4 className="font-orbitron text-[10px] tracking-[0.22em] uppercase text-cyan mb-4">Products</h4>
+
+          <div className="text-[9px] tracking-[0.18em] uppercase text-cyan/50 font-orbitron mb-2">Network / DC</div>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">Ethernet Switch</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">SFP Module</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-3 transition-colors">Media Converter</Link>
+
           <div className="text-[9px] tracking-[0.18em] uppercase text-cyan/50 font-orbitron mb-2">Fiber Optic</div>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">Optical Fiber Cable</Link>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">OFC Joint Closures</Link>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">LIU / FMS Panels</Link>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-3 transition-colors">Splicing Machines</Link>
-          <div className="text-[9px] tracking-[0.18em] uppercase text-cyan/50 font-orbitron mb-2">Network</div>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">Network Switches</Link>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">ONT / OLT Devices</Link>
-          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">PoE Switches</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">OFC Cable</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">FDMS / LIU</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-3 transition-colors">Patch Cord</Link>
+
+          <div className="text-[9px] tracking-[0.18em] uppercase text-cyan/50 font-orbitron mb-2">Structured Cabling</div>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">CAT 6/6A Cable</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">Patch Panel</Link>
+          <Link href="/products" className="block text-sm text-text-muted hover:text-white mb-1.5 transition-colors">Network Rack</Link>
         </div>
       </div>
 
@@ -52,7 +65,7 @@ export default function Footer() {
           <span className="text-lg">📞</span>
           <div>
             <div className="text-[9px] tracking-widest uppercase text-cyan/60 font-orbitron">Call Us</div>
-            <div className="text-xs font-medium">+91 8101648585</div>
+            <div className="text-xs font-medium">+91 81016 48585</div>
           </div>
         </a>
         <a href="mailto:info@dronedge.in" className="flex items-center gap-3 text-text-muted hover:text-cyan transition-colors">
@@ -62,11 +75,11 @@ export default function Footer() {
             <div className="text-xs font-medium">info@dronedge.in</div>
           </div>
         </a>
-        <a href="https://wa.me/918759854111" className="flex items-center gap-3 text-text-muted hover:text-cyan transition-colors">
+        <a href="https://wa.me/918101648585" className="flex items-center gap-3 text-text-muted hover:text-cyan transition-colors">
           <span className="text-lg">💬</span>
           <div>
             <div className="text-[9px] tracking-widest uppercase text-cyan/60 font-orbitron">WhatsApp</div>
-            <div className="text-xs font-medium">+91 87598 54111</div>
+            <div className="text-xs font-medium">+91 81016 48585</div>
           </div>
         </a>
         <div className="flex items-center gap-3 text-text-muted">
@@ -80,7 +93,7 @@ export default function Footer() {
 
       <div className="border-t border-cyan/07 pt-5 flex flex-wrap items-center justify-between gap-3">
         <p className="font-orbitron text-[10px] tracking-widest text-text-muted/30 uppercase">
-          © 2025 Dron Edge India Pvt. Ltd. · All Rights Reserved
+          © {new Date().getFullYear()} Dron Edge India Pvt. Ltd. · All Rights Reserved
         </p>
         <p className="font-orbitron text-[10px] tracking-widest text-text-muted/30 uppercase">
           GST: 09AAFCD3524N1ZE · CIN: U74140BR2015PTC024256
