@@ -18,7 +18,7 @@ async function getData() {
 const timeline = [
   { year: '2015', title: 'Company Founded', desc: 'Dron Edge India Private Limited incorporated in Noida. Started as a trader and distributor of optical fiber cables.' },
   { year: '2017', title: 'Manufacturing Unit', desc: 'Set up in-house manufacturing facility. Began producing OFC joint closures and LIU systems.' },
-  { year: '2019', title: 'RDSO Approval', desc: 'Obtained RDSO approval for optical fiber cables — enabling supply to Indian Railways.' },
+  { year: '2019', title: 'National Compliance', desc: 'Achieved critical national compliance certifications — opening doors to government tenders, PSU projects and large enterprise deployments pan India.' },
   { year: '2021', title: 'OEM & Export', desc: 'Expanded into OEM manufacturing and white-labelling. Export operations initiated.' },
   { year: '2023', title: 'Network Switch Line', desc: 'Launched dedicated network switch product line under the Dron Edge brand.' },
   { year: '2025', title: 'Four Divisions', desc: 'Formalized B2C, B2G, OEM and SI divisions to serve each market with specialized expertise.' },
@@ -67,9 +67,9 @@ export default async function AboutPage() {
             </div>
             <h2 className="font-orbitron text-3xl font-bold mb-6">A Decade of Building <span className="text-cyan">India's Networks</span></h2>
             <div className="space-y-4 text-sm text-text-muted font-light leading-relaxed">
-              <p>{content.company_story || 'Founded in 2015 in Noida, Uttar Pradesh, Dron Edge India Private Limited has grown into one of India\'s most trusted manufacturers and exporters of optical fiber cables, network switches, and telecom infrastructure equipment.'}</p>
-              <p>We started with a simple mission — <strong className="text-white font-medium">make high-quality networking products accessible to every corner of India.</strong> Today, our products power government projects, telecom networks, enterprise infrastructure, and homes across the country.</p>
-              <p>Our RDSO-approved product range ensures we meet the most stringent government and railway specifications — making us a preferred partner for critical national infrastructure projects.</p>
+              <p>Founded in 2015 in Noida, Uttar Pradesh, Dron Edge India Private Limited has emerged as one of India's leading manufacturers and exporters of networking infrastructure products. With over a decade of industry experience, we have built a reputation for delivering world-class quality, technical excellence, and unmatched reliability.</p>
+              <p>Our journey began with a singular vision — <strong className="text-white font-medium">to make enterprise-grade networking products accessible across every segment of India.</strong> Today, Dron Edge products power mission-critical government projects, large-scale telecom networks, enterprise infrastructure deployments, and broadband connectivity for millions of homes nationwide.</p>
+              <p>Our MTCTE-approved product range meets the most stringent quality benchmarks set by the Government of India — making us a preferred and trusted partner for critical national infrastructure, smart city deployments, and large-scale telecom rollouts across the country.</p>
             </div>
           </div>
           <div className="relative">
@@ -153,7 +153,7 @@ export default async function AboutPage() {
             <span className="w-7 h-px bg-cyan"/>Leadership
           </div>
           <h2 className="font-orbitron text-3xl font-bold mb-10">The Team Behind <span className="text-cyan">Dron Edge</span></h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-2xl">
             {team.map(m => (
               <div key={m.id} className="bg-blue-mid/60 border border-cyan/08 rounded-lg overflow-hidden hover:border-cyan/25 hover:-translate-y-1 transition-all text-center">
                 <div className="h-44 overflow-hidden bg-blue-deep/80">
@@ -212,8 +212,8 @@ export default async function AboutPage() {
           <Link href="/contact" className="font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep px-7 py-3.5 rounded-sm font-bold hover:bg-cyan-dim transition-colors border-2 border-cyan">
             Send Enquiry
           </Link>
-          <a href="tel:+917942631533" className="font-orbitron text-xs tracking-widest uppercase text-cyan px-7 py-3.5 rounded-sm font-semibold border-2 hover:bg-cyan/07 transition-all" style={{borderColor:'rgba(0,229,255,0.35)'}}>
-            📞 +91 79426 31533
+          <a href="tel:+918101648585" className="font-orbitron text-xs tracking-widest uppercase text-cyan px-7 py-3.5 rounded-sm font-semibold border-2 hover:bg-cyan/07 transition-all" style={{borderColor:'rgba(0,229,255,0.35)'}}>
+            📞 +91 81016 48585
           </a>
         </div>
       </section>
