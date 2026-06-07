@@ -8,7 +8,7 @@ const divisions = [
 ]
 
 const stats = [
-  { val: '11+', lbl: 'Years Experience' },
+  { val: `${new Date().getFullYear() - 2015}+`, lbl: 'Years Experience' },
   { val: '500+', lbl: 'Products' },
   { val: '1000+', lbl: 'Happy Clients' },
 ]
