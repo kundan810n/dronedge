@@ -10,30 +10,56 @@ const tiers = [
     num: '01', icon: '🥉', name: 'GEM Authorized Reseller',
     fee: '₹5,000', commitment: '₹10 Lakhs/year', experience: 'No experience required',
     featured: false,
-    criteria: {
-      firmTypes: ['Proprietorship', 'LLP', 'Private Limited', 'Public Limited'],
-      minExp: 0, minTurnover: 0, minTeam: 0
-    },
+    criteria: [
+      { label: 'Firm Type', value: 'Proprietorship / LLP / Private Limited / Public Limited' },
+      { label: 'Telecom Experience', value: 'No prior experience required — we provide full training' },
+      { label: 'Minimum Turnover', value: 'No minimum turnover requirement' },
+      { label: 'Business Commitment', value: 'Minimum ₹10 Lakhs business guarantee per annum' },
+      { label: 'Registration Fee', value: '₹5,000/- one time (adjustable in first order within 30 days)' },
+      { label: 'GST Registration', value: 'Valid GSTIN mandatory' },
+      { label: 'Bank Account', value: 'Active business bank account required' },
+      { label: 'Service Area', value: 'Must specify primary service territory / state' },
+    ],
+    eligCheck: { firmTypes: ['Proprietorship','LLP','Private Limited','Public Limited'], minExp: 0, minTurnover: 0, minTeam: 0 },
     perks: ['Wholesale pricing', 'Product training', 'Marketing support', 'Technical assistance', 'Sales collateral']
   },
   {
     num: '02', icon: '🥈', name: 'Preferred Partner',
     fee: '₹1,50,000', commitment: '₹50 Lakhs/year', experience: '2+ years experience',
     featured: true,
-    criteria: {
-      firmTypes: ['LLP', 'Private Limited', 'Public Limited'],
-      minExp: 2, minTurnover: 100, minTeam: 5
-    },
+    criteria: [
+      { label: 'Firm Type', value: 'LLP / Private Limited / Public Limited' },
+      { label: 'Telecom Experience', value: 'Minimum 2 years in telecom/networking industry' },
+      { label: 'Minimum Turnover', value: '₹1 Crore per annum (last financial year)' },
+      { label: 'Business Commitment', value: 'Minimum ₹50 Lakhs business guarantee per annum' },
+      { label: 'Registration Fee', value: '₹1,50,000/- one time (adjustable in first order within 30 days)' },
+      { label: 'GST Registration', value: 'Valid GSTIN mandatory' },
+      { label: 'Bank Account', value: 'Active business bank account required' },
+      { label: 'Team Strength', value: 'Minimum 5 dedicated sales personnel' },
+      { label: 'Service Area', value: 'Must cover minimum 2 districts or 1 full state' },
+      { label: 'Infrastructure', value: 'Office/warehouse space for stock holding' },
+    ],
+    eligCheck: { firmTypes: ['LLP','Private Limited','Public Limited'], minExp: 2, minTurnover: 100, minTeam: 5 },
     perks: ['Higher margins', 'Priority stock', 'Co-branded material', 'Dedicated manager', 'Quarterly review']
   },
   {
     num: '03', icon: '🥇', name: 'Strategic Partner',
     fee: '₹5,00,000', commitment: '₹2 Crore/year', experience: '5+ years experience',
     featured: false,
-    criteria: {
-      firmTypes: ['Private Limited', 'Public Limited'],
-      minExp: 5, minTurnover: 500, minTeam: 10
-    },
+    criteria: [
+      { label: 'Firm Type', value: 'Private Limited / Public Limited' },
+      { label: 'Telecom Experience', value: 'Minimum 5 years with proven project track record' },
+      { label: 'Minimum Turnover', value: '₹5 Crore per annum (last 3 financial years)' },
+      { label: 'Business Commitment', value: 'Minimum ₹2 Crore business guarantee per annum' },
+      { label: 'Registration Fee', value: '₹5,00,000/- one time (adjustable in first order within 60 days)' },
+      { label: 'GST Registration', value: 'Valid GSTIN mandatory' },
+      { label: 'Bank Account', value: 'Active business bank account required' },
+      { label: 'Team Strength', value: 'Minimum 10 dedicated sales & technical personnel' },
+      { label: 'Service Area', value: 'Must cover minimum 1 full state or pan-India operations' },
+      { label: 'Infrastructure', value: 'Dedicated office and warehouse for bulk stock holding' },
+      { label: 'References', value: 'Minimum 3 client references from government or enterprise projects' },
+    ],
+    eligCheck: { firmTypes: ['Private Limited','Public Limited'], minExp: 5, minTurnover: 500, minTeam: 10 },
     perks: ['Best-in-class pricing', 'Custom products', 'Joint planning', 'Executive support', 'Exclusive territory']
   }
 ]
@@ -54,7 +80,7 @@ const steps = [
   { num: '04', title: 'Start Selling', desc: 'Get access to products, training and start growing.' },
 ]
 
-type Step = 'tiers' | 'eligibility' | 'form' | 'success'
+type Step = 'tiers' | 'criteria' | 'eligibility' | 'form' | 'success'
 
 export default function PartnerPage() {
   const [step, setStep] = useState<Step>('tiers')
@@ -63,23 +89,29 @@ export default function PartnerPage() {
   const [eligReason, setEligReason] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // Eligibility form
   const [elig, setElig] = useState({
     name: '', company: '', phone: '', email: '',
     firmType: '', expYears: '', turnover: '', teamSize: '', gst: '', bank: ''
   })
 
-  // Application form
   const [appForm, setAppForm] = useState({
     designation: '', gst: '', city: '', territory: '', bio: ''
   })
+
+  function openTier(i: number) {
+    setSelectedTier(i + 1)
+    setEligible(null)
+    setEligReason('')
+    setElig({ name: '', company: '', phone: '', email: '', firmType: '', expYears: '', turnover: '', teamSize: '', gst: '', bank: '' })
+    setAppForm({ designation: '', gst: '', city: '', territory: '', bio: '' })
+    setStep('criteria')
+  }
 
   function checkEligibility() {
     const { name, company, phone, email, firmType, expYears, turnover, teamSize, gst, bank } = elig
     if (!name || !company || !phone || !email || !firmType || !expYears || !turnover || !teamSize || !gst || !bank) {
       alert('Please fill all fields'); return
     }
-
     const tier = tiers[selectedTier! - 1]
     const exp = parseInt(expYears)
     const turn = parseInt(turnover)
@@ -88,18 +120,18 @@ export default function PartnerPage() {
     if (gst === 'No' || bank === 'No') {
       setEligible(false)
       setEligReason('GST registration and active bank account are mandatory for all tiers.')
-      sendEmail(false, 'GST registration and active bank account are mandatory.')
+      sendEmail(false, 'GST/bank not available')
       return
     }
 
     const reasons: string[] = []
-    if (!tier.criteria.firmTypes.includes(firmType)) reasons.push(`Firm type must be ${tier.criteria.firmTypes.join(' / ')}`)
-    if (exp < tier.criteria.minExp) reasons.push(`Minimum ${tier.criteria.minExp} years telecom experience required`)
-    if (turn < tier.criteria.minTurnover) {
-      const label = tier.criteria.minTurnover >= 100 ? `₹${tier.criteria.minTurnover >= 500 ? '5 Crore' : '1 Crore'}` : `₹${tier.criteria.minTurnover} Lakhs`
+    if (!tier.eligCheck.firmTypes.includes(firmType)) reasons.push(`Firm type must be ${tier.eligCheck.firmTypes.join(' / ')}`)
+    if (exp < tier.eligCheck.minExp) reasons.push(`Minimum ${tier.eligCheck.minExp} years telecom experience required`)
+    if (turn < tier.eligCheck.minTurnover) {
+      const label = tier.eligCheck.minTurnover >= 500 ? '₹5 Crore' : tier.eligCheck.minTurnover >= 100 ? '₹1 Crore' : `₹${tier.eligCheck.minTurnover} Lakhs`
       reasons.push(`Minimum ${label} annual turnover required`)
     }
-    if (team < tier.criteria.minTeam) reasons.push(`Minimum ${tier.criteria.minTeam} sales personnel required`)
+    if (team < tier.eligCheck.minTeam && tier.eligCheck.minTeam > 0) reasons.push(`Minimum ${tier.eligCheck.minTeam} sales personnel required`)
 
     if (reasons.length > 0) {
       setEligible(false)
@@ -118,8 +150,7 @@ export default function PartnerPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: elig.name, company: elig.company,
-          phone: elig.phone, email: elig.email,
+          name: elig.name, company: elig.company, phone: elig.phone, email: elig.email,
           tier: selectedTier, tierName: tiers[selectedTier! - 1].name,
           eligible: isEligible,
           eligibilityData: { firmType: elig.firmType, expYears: elig.expYears, turnover: elig.turnover, teamSize: elig.teamSize, gst: elig.gst },
@@ -138,8 +169,7 @@ export default function PartnerPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: elig.name, company: elig.company,
-          phone: elig.phone, email: elig.email,
+          name: elig.name, company: elig.company, phone: elig.phone, email: elig.email,
           tier: selectedTier, tierName: tiers[selectedTier! - 1].name,
           eligible: true,
           eligibilityData: { firmType: elig.firmType, expYears: elig.expYears, turnover: elig.turnover, teamSize: elig.teamSize, gst: elig.gst },
@@ -183,7 +213,7 @@ export default function PartnerPage() {
           <span className="w-7 h-px bg-cyan"/>Why Partner With Us
         </div>
         <h2 className="font-orbitron text-3xl font-bold mb-10">Join India's Fastest Growing <span className="text-cyan">Network Brand</span></h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {benefits.map(b => (
             <div key={b.title} className="bg-blue-mid/60 border border-cyan/08 rounded-lg p-5 hover:border-cyan/25 transition-colors">
               <div className="text-2xl mb-3">{b.icon}</div>
@@ -200,7 +230,7 @@ export default function PartnerPage() {
           <span className="w-7 h-px bg-cyan"/>Partnership Tiers
         </div>
         <h2 className="font-orbitron text-3xl font-bold mb-12">Choose Your <span className="text-cyan">Partnership Level</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {tiers.map((t, i) => (
             <div key={t.num} className={`relative bg-blue-mid/60 border rounded-xl p-8 transition-all ${t.featured ? 'border-cyan/45 shadow-lg shadow-cyan/10' : 'border-cyan/12'}`}>
               {t.featured && (
@@ -219,7 +249,7 @@ export default function PartnerPage() {
                   </div>
                 ))}
               </div>
-              <button onClick={() => { setSelectedTier(i + 1); setEligible(null); setEligReason(''); setStep('eligibility') }}
+              <button onClick={() => openTier(i)}
                 className={`w-full font-orbitron text-xs tracking-widest uppercase py-3 rounded-sm transition-all ${t.featured ? 'bg-cyan text-blue-deep font-bold border-2 border-cyan hover:bg-cyan-dim' : 'text-cyan border-2 hover:bg-cyan/07'}`}
                 style={!t.featured ? {borderColor:'rgba(0,229,255,0.35)'} : {}}>
                 Apply Now
@@ -229,17 +259,44 @@ export default function PartnerPage() {
         </div>
       </section>
 
-      {/* ELIGIBILITY + APPLICATION MODAL */}
-      {step !== 'tiers' && (
+      {/* MODAL */}
+      {step !== 'tiers' && selectedTier !== null && (
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto py-8 px-4" style={{background:'rgba(2,11,24,0.95)',backdropFilter:'blur(8px)'}}>
           <div className="bg-blue-mid border border-cyan/15 rounded-xl w-full max-w-2xl p-8 relative my-4">
             <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-xl" style={{background:'linear-gradient(90deg,transparent,#00e5ff,transparent)'}}/>
-            <button onClick={() => { setStep('tiers'); setEligible(null) }} className="absolute top-4 right-4 text-text-muted hover:text-cyan text-xl">✕</button>
+            <button onClick={() => setStep('tiers')} className="absolute top-4 right-4 text-text-muted hover:text-cyan text-xl">✕</button>
 
+            {/* STEP 1 — CRITERIA */}
+            {step === 'criteria' && (
+              <>
+                <div className="text-[10px] tracking-[0.22em] uppercase text-cyan font-orbitron mb-1">Step 1 of 3 — Eligibility Criteria</div>
+                <h3 className="font-orbitron text-lg font-bold mb-2">{tiers[selectedTier - 1].name}</h3>
+                <p className="text-sm text-text-muted font-light mb-6">Please read the eligibility criteria carefully before proceeding.</p>
+
+                <div className="bg-blue-deep/60 border border-cyan/10 rounded-lg overflow-hidden mb-6">
+                  <div className="bg-cyan/05 px-5 py-3 border-b border-cyan/10">
+                    <span className="font-orbitron text-[10px] tracking-widest uppercase text-cyan">Eligibility Criteria</span>
+                  </div>
+                  {tiers[selectedTier - 1].criteria.map((c, i) => (
+                    <div key={c.label} className={`flex gap-4 px-5 py-3 ${i < tiers[selectedTier - 1].criteria.length - 1 ? 'border-b border-cyan/05' : ''} hover:bg-cyan/02 transition-colors`}>
+                      <div className="text-[10px] tracking-widest uppercase text-cyan font-orbitron w-36 flex-shrink-0 pt-0.5">{c.label}</div>
+                      <div className="text-sm text-text-muted font-light leading-relaxed">{c.value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <button onClick={() => setStep('eligibility')}
+                  className="w-full font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep py-3 rounded font-bold hover:bg-cyan-dim transition-colors">
+                  I Understand — Check My Eligibility →
+                </button>
+              </>
+            )}
+
+            {/* STEP 2 — ELIGIBILITY CHECK */}
             {step === 'eligibility' && (
               <>
-                <div className="text-[10px] tracking-[0.22em] uppercase text-cyan font-orbitron mb-1">Step 1 — Eligibility Check</div>
-                <h3 className="font-orbitron text-lg font-bold mb-6">{tiers[selectedTier! - 1].name}</h3>
+                <div className="text-[10px] tracking-[0.22em] uppercase text-cyan font-orbitron mb-1">Step 2 of 3 — Eligibility Check</div>
+                <h3 className="font-orbitron text-lg font-bold mb-6">{tiers[selectedTier - 1].name}</h3>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div>
@@ -313,17 +370,22 @@ export default function PartnerPage() {
                   </div>
                 </div>
 
-                <button onClick={checkEligibility}
-                  className="w-full font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep py-3 rounded font-bold hover:bg-cyan-dim transition-colors">
-                  Check Eligibility →
-                </button>
+                <div className="flex gap-3 mb-5">
+                  <button onClick={() => setStep('criteria')} className="font-orbitron text-xs tracking-widest uppercase text-cyan px-5 py-3 rounded border border-cyan/25 hover:bg-cyan/05 transition-colors">
+                    Back
+                  </button>
+                  <button onClick={checkEligibility}
+                    className="flex-1 font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep py-3 rounded font-bold hover:bg-cyan-dim transition-colors">
+                    Check Eligibility →
+                  </button>
+                </div>
 
                 {eligible !== null && (
-                  <div className={`mt-5 p-5 rounded-lg border ${eligible ? 'border-green-500/30 bg-green-500/08' : 'border-red-500/30 bg-red-500/08'}`}>
+                  <div className={`p-5 rounded-lg border ${eligible ? 'border-green-500/30 bg-green-500/08' : 'border-red-500/30 bg-red-500/08'}`}>
                     <div className={`font-orbitron text-sm font-bold mb-2 ${eligible ? 'text-green-400' : 'text-red-400'}`}>
                       {eligible ? '✅ Eligible!' : '❌ Not Eligible'}
                     </div>
-                    <p className="text-sm text-text-muted font-light">{eligReason}</p>
+                    <p className="text-sm text-text-muted font-light leading-relaxed">{eligReason}</p>
                     {eligible && (
                       <button onClick={() => setStep('form')}
                         className="mt-4 font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep px-6 py-2.5 rounded font-bold hover:bg-cyan-dim transition-colors">
@@ -335,10 +397,11 @@ export default function PartnerPage() {
               </>
             )}
 
+            {/* STEP 3 — APPLICATION FORM */}
             {step === 'form' && (
               <>
-                <div className="text-[10px] tracking-[0.22em] uppercase text-cyan font-orbitron mb-1">Step 2 — Application Form</div>
-                <h3 className="font-orbitron text-lg font-bold mb-6">{tiers[selectedTier! - 1].name}</h3>
+                <div className="text-[10px] tracking-[0.22em] uppercase text-cyan font-orbitron mb-1">Step 3 of 3 — Application Form</div>
+                <h3 className="font-orbitron text-lg font-bold mb-6">{tiers[selectedTier - 1].name}</h3>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div>
                     <label className={labelClass}>Full Name</label>
@@ -372,7 +435,7 @@ export default function PartnerPage() {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => setStep('eligibility')} className="font-orbitron text-xs tracking-widest uppercase text-cyan px-6 py-3 rounded border border-cyan/25 hover:bg-cyan/05 transition-colors">
+                  <button onClick={() => setStep('eligibility')} className="font-orbitron text-xs tracking-widest uppercase text-cyan px-5 py-3 rounded border border-cyan/25 hover:bg-cyan/05 transition-colors">
                     Back
                   </button>
                   <button onClick={submitApplication} disabled={loading}
@@ -383,14 +446,14 @@ export default function PartnerPage() {
               </>
             )}
 
+            {/* SUCCESS */}
             {step === 'success' && (
               <div className="text-center py-10">
                 <div className="text-5xl mb-4">🎉</div>
                 <div className="font-orbitron text-xl font-bold text-cyan mb-3">Application Submitted!</div>
                 <p className="text-sm text-text-muted font-light leading-relaxed mb-6">
                   Our partnership team will contact you within <strong className="text-white">24–48 hours</strong>.
-                  <br/><br/>For urgent queries:<br/>
-                  <strong className="text-cyan">+91 81016 48585</strong>
+                  <br/><br/>For urgent queries: <strong className="text-cyan">+91 81016 48585</strong>
                 </p>
                 <button onClick={() => setStep('tiers')} className="font-orbitron text-xs tracking-widest uppercase text-cyan border border-cyan/25 px-6 py-2.5 rounded hover:bg-cyan/05 transition-colors">
                   Back to Partner Page
