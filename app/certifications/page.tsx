@@ -34,9 +34,9 @@ const registrations = [
 ]
 
 const inspectionSupport = [
-  { icon: '🏅', title: 'RDSO Support', desc: 'Full Inspection Assistance' },
-  { icon: '📋', title: 'RITES Support', desc: 'Full Inspection Assistance' },
-  { icon: '✅', title: 'TPI Support', desc: 'Full Inspection Assistance' },
+  { icon: '🏅', title: 'RDSO Inspection', desc: 'Full Inspection Assistance' },
+  { icon: '📋', title: 'RITES Inspection', desc: 'Full Inspection Assistance' },
+  { icon: '✅', title: 'TPI Inspection', desc: 'Full Inspection Assistance' },
 ]
 
 export default async function CertificationsPage() {
@@ -138,9 +138,9 @@ export default async function CertificationsPage() {
                   <td className="px-5 py-3.5">
                     <span className="text-[10px] px-2.5 py-1 rounded font-orbitron flex items-center gap-1.5 w-fit"
                       style={{
-                        background: c.status === 'Approved' ? 'rgba(0,255,136,0.12)' : 'rgba(0,229,255,0.08)',
-                        border: c.status === 'Approved' ? '1px solid rgba(0,255,136,0.3)' : '1px solid rgba(0,229,255,0.2)',
-                        color: c.status === 'Approved' ? '#4ade80' : '#00e5ff'
+                        background: 'rgba(0,255,136,0.12)',
+                        border: '1px solid rgba(0,255,136,0.3)',
+                        color: '#4ade80'
                       }}>
                       ✓ {c.status}
                     </span>
