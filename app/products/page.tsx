@@ -9,9 +9,9 @@ import type { Product } from '@/types'
 
 const categories = [
   { label: 'All Products', value: 'all' },
+  { label: 'Network / Data Centre Solutions', value: 'Network / Data Centre Solutions' },
   { label: 'Fiber Optic Solutions', value: 'Fiber Optic Solutions' },
-  { label: 'Network Solutions', value: 'Network Solutions' },
-  { label: 'Other Solutions', value: 'Other Solutions' },
+  { label: 'Structured Cabling', value: 'Structured Cabling' },
 ]
 
 export default function ProductsPage() {
@@ -70,16 +70,24 @@ export default function ProductsPage() {
                 {cat.label}
               </button>
             ))}
+
+            {/* Quick Links */}
+            <div className="px-6 mt-8 pt-6 border-t border-cyan/08">
+              <div className="text-[10px] tracking-[0.22em] uppercase text-cyan font-orbitron mb-3">Quick Links</div>
+              <Link href="/contact" className="block text-sm text-text-muted hover:text-cyan mb-2 transition-colors">📩 Get a Quote</Link>
+              <Link href="/contact" className="block text-sm text-text-muted hover:text-cyan mb-2 transition-colors">📞 Call Us</Link>
+              <Link href="/partner" className="block text-sm text-text-muted hover:text-cyan transition-colors">🤝 Become a Partner</Link>
+            </div>
           </div>
         </div>
 
         {/* CONTENT */}
         <div className="flex-1 p-8">
-          {/* Search + Filter */}
+          {/* Search + Mobile Filter */}
           <div className="flex gap-3 mb-6 flex-wrap">
             <input value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="bg-blue-mid/50 border border-cyan/10 rounded px-4 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/35 transition-colors flex-1 max-w-xs"/>
+              className="bg-blue-mid/50 border border-cyan/10 rounded px-4 py-2.5 text-sm text-white placeholder-text-muted/40 focus:outline-none focus:border-cyan/35 transition-colors flex-1 max-w-sm"/>
             <div className="flex gap-2 lg:hidden flex-wrap">
               {categories.map(cat => (
                 <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
@@ -100,35 +108,50 @@ export default function ProductsPage() {
           </div>
 
           {loading ? (
-            <div className="text-center py-20 text-text-muted">Loading products...</div>
+            <div className="text-center py-20">
+              <div className="font-orbitron text-sm text-text-muted animate-pulse">Loading products...</div>
+            </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-5xl mb-4 opacity-20">📦</div>
-              <p className="text-text-muted">No products found.</p>
+              <p className="text-text-muted font-orbitron text-sm">No products found.</p>
+              <p className="text-text-muted text-xs mt-2">Try a different category or search term.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
               {filtered.map(p => (
                 <Link key={p.id} href={`/products/${p.slug}`}
-                  className="group bg-blue-mid/65 border border-cyan/08 rounded-lg overflow-hidden hover:border-cyan/35 hover:-translate-y-1 transition-all">
-                  <div className="relative h-44 overflow-hidden bg-blue-deep/80">
+                  className="group bg-blue-mid/65 border border-cyan/08 rounded-lg overflow-hidden hover:border-cyan/35 hover:-translate-y-1 transition-all duration-300">
+                  <div className="relative h-48 overflow-hidden bg-blue-deep/80">
                     {p.images?.[0] ? (
                       <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         style={{filter:'brightness(0.55) saturate(0.6) hue-rotate(185deg)'}}/>
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-text-muted/20 font-orbitron text-xs tracking-widest">NO IMAGE</div>
+                      <div className="w-full h-full flex flex-col items-center justify-center gap-3">
+                        <div className="text-4xl opacity-20">📦</div>
+                        <div className="text-text-muted/30 font-orbitron text-[10px] tracking-widest">{p.sub_category || p.category}</div>
+                      </div>
                     )}
                     {p.badge && (
-                      <span className="absolute top-3 left-3 text-[10px] px-2 py-1 font-orbitron tracking-wider"
+                      <span className="absolute top-3 left-3 text-[10px] px-2.5 py-1 font-orbitron tracking-wider"
                         style={{background:'rgba(0,229,255,0.15)',border:'1px solid rgba(0,229,255,0.3)',color:'#00e5ff'}}>
                         {p.badge}
                       </span>
                     )}
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan to-transparent scale-x-0 group-hover:scale-x-100 transition-transform"/>
+                    {p.is_featured && !p.badge && (
+                      <span className="absolute top-3 left-3 text-[10px] px-2.5 py-1 font-orbitron tracking-wider"
+                        style={{background:'rgba(255,180,0,0.15)',border:'1px solid rgba(255,180,0,0.3)',color:'#fbb040'}}>
+                        Featured
+                      </span>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300"/>
                   </div>
                   <div className="p-5">
-                    <div className="text-[10px] tracking-[0.2em] uppercase text-cyan mb-2 opacity-75">{p.sub_category || p.category}</div>
-                    <div className="font-orbitron text-sm font-semibold mb-2 leading-snug">{p.name}</div>
+                    <div className="text-[10px] tracking-[0.2em] uppercase text-cyan mb-1.5 opacity-75">{p.sub_category || p.category}</div>
+                    <div className="font-orbitron text-sm font-semibold mb-2 leading-snug group-hover:text-cyan transition-colors">{p.name}</div>
+                    {p.model_number && (
+                      <div className="text-[10px] text-text-muted font-orbitron mb-2 opacity-60">Model: {p.model_number}</div>
+                    )}
                     <p className="text-xs text-text-muted font-light leading-relaxed mb-4 line-clamp-2">{p.description}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex gap-1.5 flex-wrap">
@@ -144,6 +167,15 @@ export default function ProductsPage() {
                   </div>
                 </Link>
               ))}
+            </div>
+          )}
+
+          {/* CTA when no products */}
+          {!loading && filtered.length === 0 && (
+            <div className="text-center mt-8">
+              <Link href="/contact" className="font-orbitron text-xs tracking-widest uppercase bg-cyan text-blue-deep px-6 py-3 rounded font-bold hover:bg-cyan-dim transition-colors">
+                📩 Request Product Info
+              </Link>
             </div>
           )}
         </div>
