@@ -175,7 +175,7 @@ export default async function HomePage() {
       <section className="px-16 py-20">
         <div className="grid grid-cols-3 border border-cyan/10 rounded-lg overflow-hidden" style={{background:'rgba(7,26,53,0.5)'}}>
           {[
-            { val: content.stat_years || '11+', lbl: 'Years in Business' },
+            { val: content.stat_years || `${new Date().getFullYear() - 2015}+`, lbl: 'Years in Business' },
             { val: content.stat_products || '500+', lbl: 'Products' },
             { val: content.stat_clients || '1000+', lbl: 'Happy Clients' },
           ].map((s, i) => (
