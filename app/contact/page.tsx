@@ -186,7 +186,7 @@ export default function ContactPage() {
         <div className="absolute top-0 left-0 right-0 h-14 z-10" style={{background:'linear-gradient(to bottom,rgba(2,11,24,0.8),transparent)'}}/>
         <div className="absolute bottom-0 left-0 right-0 h-14 z-10" style={{background:'linear-gradient(to top,rgba(2,11,24,0.8),transparent)'}}/>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.9!2d77.3895!3d28.5713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSector+65%2C+Noida!5e0!3m2!1sen!2sin!4v1620000000000"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.8!2d77.3787877!3d28.6108734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5c39a071f41:0xf4feb27fddcfe424!2sDron+Edge+India+Private+Limited!5e0!3m2!1sen!2sin!4v1620000000000"
           className="w-full h-full border-0"
           style={{filter:'invert(0.9) hue-rotate(180deg) saturate(0.5) brightness(0.7)'}}
           allowFullScreen loading="lazy"/>
