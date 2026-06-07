@@ -34,8 +34,7 @@ export default function Header() {
   const navLinksRight = [
     { href: '/certifications', label: 'Certifications' },
     { href: '/partner', label: 'Partners' },
-    { href: '/partner', label: 'Partner' },
-    { href: '/clients', label: 'Clients' },
+    { href: '/clients', label: 'Trusted By 🤝' },
     { href: '/contact', label: 'Contact' },
   ]
 
